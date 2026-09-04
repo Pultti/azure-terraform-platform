@@ -22,6 +22,10 @@ resource "azurerm_subnet" "container_apps" {
 
     service_delegation {
       name = "Microsoft.App/environments"
+
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action"
+      ]
     }
   }
 }
