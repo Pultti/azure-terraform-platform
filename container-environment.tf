@@ -7,6 +7,13 @@ resource "azurerm_container_app_environment" "main" {
   log_analytics_workspace_id     = azurerm_log_analytics_workspace.main.id
   internal_load_balancer_enabled = false
 
+  workload_profile {
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    minimum_count         = 0
+    maximum_count         = 0
+  }
+
   tags = {
     environment = "learning"
     project     = "azure-terraform-platform"

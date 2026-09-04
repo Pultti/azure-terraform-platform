@@ -12,3 +12,13 @@ output "container_app_environment_name" {
   description = "Name of the Container Apps environment"
   value       = azurerm_container_app_environment.main.name
 }
+
+output "container_registry_name" {
+  description = "Name of the Azure Container Registry"
+  value       = azurerm_container_registry.main.name
+}
+
+output "container_registry_login_server" {
+  description = "Login address of the Azure Container Registry"
+  value       = azurerm_container_registry.main.login_server
+}
