@@ -22,3 +22,8 @@ output "container_registry_login_server" {
   description = "Login address of the Azure Container Registry"
   value       = azurerm_container_registry.main.login_server
 }
+
+output "container_app_url" {
+  description = "Public URL of the Container App"
+  value       = "https://${azurerm_container_app.main.latest_revision_fqdn}"
+}
