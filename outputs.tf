@@ -25,5 +25,10 @@ output "container_registry_login_server" {
 
 output "container_app_url" {
   description = "Public URL of the Container App"
-  value       = "https://${azurerm_container_app.main.latest_revision_fqdn}"
+  value       = "https://${azurerm_container_app.main.ingress[0].fqdn}"
+}
+
+output "key_vault_name" {
+  description = "Name of the Key Vault"
+  value       = azurerm_key_vault.main.name
 }

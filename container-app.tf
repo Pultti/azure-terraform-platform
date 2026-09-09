@@ -3,6 +3,7 @@ resource "azurerm_container_app" "main" {
   container_app_environment_id = azurerm_container_app_environment.main.id
   resource_group_name          = azurerm_resource_group.main.name
   revision_mode                = "Single"
+  workload_profile_name        = "Consumption"
 
   identity {
     type = "UserAssigned"
@@ -10,6 +11,12 @@ resource "azurerm_container_app" "main" {
     identity_ids = [
       azurerm_user_assigned_identity.container_app.id
     ]
+  }
+
+  secret {
+    name                = "demo-api-key"
+    identity            = azurerm_user_assigned_identity.container_app.id
+    key_vault_secret_id = "${azurerm_key_vault.main.vault_uri}secrets/demo-api-key"
   }
 
   registry {
@@ -30,6 +37,11 @@ resource "azurerm_container_app" "main" {
       env {
         name  = "PORT"
         value = "8080"
+      }
+
+      env {
+        name        = "DEMO_API_KEY"
+        secret_name = "demo-api-key"
       }
     }
   }
@@ -53,6 +65,7 @@ resource "azurerm_container_app" "main" {
   }
 
   depends_on = [
-    azurerm_role_assignment.acr_pull
+    azurerm_role_assignment.acr_pull,
+    azurerm_role_assignment.key_vault_secrets_user
   ]
 }
